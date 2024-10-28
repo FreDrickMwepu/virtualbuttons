@@ -11,24 +11,26 @@ button_width = 200
 button_height = 100
 button_spacing = 20  # Space between buttons
 
-# Define button positions and sizes dynamically
+# Define button positions, sizes, and colors dynamically
 buttons = []
-num_buttons = 8  # Number of buttons
+num_buttons = 5  # Number of buttons
 start_x = 100
 start_y = 100
+colors = [(0, 0, 255), (255, 0, 0), (0, 255, 0), (0, 255, 255), (255, 255, 255)]  # Red, Blue, Green, Yellow, White
 
 for i in range(num_buttons):
-    x = start_x + (i % 2) * (button_width + button_spacing)
-    y = start_y + (i // 2) * (button_height + button_spacing)
-    buttons.append({"pos": (x, y), "size": (button_width, button_height), "label": f"Button {i + 1}"})
+    x = start_x
+    y = start_y + i * (button_height + button_spacing)
+    buttons.append({"pos": (x, y), "size": (button_width, button_height), "label": f"Button {i + 1}", "color": colors[i]})
 
 # Function to draw buttons
 def draw_buttons(image, buttons):
     for button in buttons:
         x, y = button["pos"]
         w, h = button["size"]
-        cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        cv2.putText(image, button["label"], (x + 10, y + 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        color = button["color"]
+        cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
+        cv2.putText(image, button["label"], (x + 10, y + 50), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
 
 # Function to check if a point is inside a button
 def is_point_in_button(point, button):
